@@ -18,17 +18,23 @@ pipeline {
         }
         stage('Increment Build Number') {
             steps {
+                script {      
                 gv.incrementBuildNumber()
+                }
             }
         }
         stage('Build') {
             steps {
+                script {
                 gv.build()
+                }
             }
         }
         stage('Test') {
             steps {
-                gv.test()
+                script {
+                    gv.test()
+                }
             }
         }
         stage('Build Image') {
@@ -36,12 +42,16 @@ pipeline {
                 expression { return env.BRANCH_NAME == 'main' }
             }
             steps {
-                gv.buildImage()
+                script {
+                    gv.buildImage()
+                }
             }
         }
         stage('Deploy') {
             steps {
-                gv.deploy()
+                script {
+                    gv.deploy()
+                }
             }
         }
         stage('git') {
@@ -49,7 +59,9 @@ pipeline {
                 expression { return env.BRANCH_NAME == 'main' }
             }
             steps {
-                gv.git()
+                script {
+                    gv.git()
+                }
             }
         }
     }
