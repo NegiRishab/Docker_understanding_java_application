@@ -8,9 +8,8 @@ def incrementBuildNumber() {
           '-DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}' \\
           versions:commit
     """
-    def pom = readMavenPom file: 'pom.xml'
-    def newVersion = pom.version
-    echo "New version: ${newVersion}"
+   def matcher = readFile('pom.xml') =~ /<version>(.+)<\/version>/
+    def newVersion = matcher[0][1]
     env.IMAGE_TAG = newVersion
 }
 def build() {
