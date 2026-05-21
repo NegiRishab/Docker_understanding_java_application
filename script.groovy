@@ -13,7 +13,7 @@ def incrementBuildNumber() {
     env.IMAGE_TAG = newVersion
 }
 def build() {
-    println "Building the project..."
+    println "Building the project...1"
      sh 'mvn clean package'
 
 }
