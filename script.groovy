@@ -2,7 +2,12 @@
 def incrementBuildNumber() {
     echo "Incrementing build number..."
 
-   sh 'mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion}-SNAPSHOT'
+       sh """
+        mvn build-helper:parse-version \\
+          versions:set \\
+          '-DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}' \\
+          versions:commit
+    """
     def pom = readMavenPom file: 'pom.xml'
     def newVersion = pom.version
     echo "New version: ${newVersion}"
@@ -36,7 +41,7 @@ def git() {
         sh "git config --global user.name '$GIT_USERNAME'"
         sh "git config --global user.email 'jenkins@jenkins.com'"
 
-        sh "git remote set-url origin https://$GIT_USERNAME:$GIT_PASSWORD@github.com/$GIT_USERNAME/repo.git"
+        sh "git remote set-url origin https://$GIT_USERNAME:$GIT_PASSWORD@github.com/$GIT_USERNAME/Docker_understanding_java_application.git"
         sh "git add ."
         sh "git commit -m 'Automated commit from Jenkins'"
         sh "git push origin HEAD:${env.BRANCH_NAME}"
