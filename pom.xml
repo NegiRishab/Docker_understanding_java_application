@@ -13,7 +13,7 @@
 
     <groupId>com.devops</groupId>
     <artifactId>superhero-collection</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>Superhero Collection</name>
     <description>DevOps practice app - superhero collection with Java and MySQL</description>
 
